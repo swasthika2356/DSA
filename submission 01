@@ -1,0 +1,225 @@
+1.
+import java.util.Stack;
+
+class QueueStackPushFriendly {
+    Stack<Integer> s1 = new Stack<>();
+    Stack<Integer> s2 = new Stack<>();
+
+    // Enqueue operation (Push Friendly)
+    void enqueue(int data) {
+        s1.push(data);
+        System.out.println(data + " inserted.");
+    }
+
+    // Dequeue operation
+    int dequeue() {
+        if (s1.isEmpty()) {
+            System.out.println("Queue is Empty");
+            return -1;
+        }
+
+        while (!s1.isEmpty()) {
+            s2.push(s1.pop());
+        }
+
+        int value = s2.pop();
+
+        while (!s2.isEmpty()) {
+            s1.push(s2.pop());
+        }
+
+        return value;
+    }
+
+    public static void main(String[] args) {
+        QueueStackPushFriendly q = new QueueStackPushFriendly();
+
+        q.enqueue(10);
+        q.enqueue(20);
+        q.enqueue(30);
+
+        System.out.println("Deleted: " + q.dequeue());
+    }
+}
+
+2.
+
+import java.util.Stack;
+
+class QueueStackPopFriendly {
+    Stack<Integer> s1 = new Stack<>();
+    Stack<Integer> s2 = new Stack<>();
+
+    // Enqueue operation
+    void enqueue(int data) {
+
+        while (!s1.isEmpty()) {
+            s2.push(s1.pop());
+        }
+
+        s1.push(data);
+
+        while (!s2.isEmpty()) {
+            s1.push(s2.pop());
+        }
+
+        System.out.println(data + " inserted.");
+    }
+
+    // Dequeue operation (Pop Friendly)
+    int dequeue() {
+
+        if (s1.isEmpty()) {
+            System.out.println("Queue is Empty");
+            return -1;
+        }
+
+        return s1.pop();
+    }
+
+    public static void main(String[] args) {
+
+        QueueStackPopFriendly q = new QueueStackPopFriendly();
+
+        q.enqueue(10);
+        q.enqueue(20);
+        q.enqueue(30);
+
+        System.out.println("Deleted: " + q.dequeue());
+    }
+}
+
+
+
+
+
+3.
+
+public class Stack {
+ private int[] arr;
+ private int top;
+ // Constructor
+ public Stack() {
+ arr = new int[5];
+ top = -1;
+ }
+ 
+
+public boolean isEmpty() {
+ return top == -1;
+ }
+ // Expand the array when full
+ private void expandArray() {
+ int newSize = arr.length * 2;
+ int[] newArr = new int[newSize];
+ for (int i = 0; i < arr.length; i++) {
+ newArr[i] = arr[i];
+ }
+ arr = newArr;
+ // Push element to the stack
+ public void push(int x) {
+ if (top == arr.length - 1) {
+ expandArray();
+ }
+ arr[++top] = x;
+ }
+
+ // Pop element from the stack
+ public int pop() {
+ if (isEmpty()) {
+ System.out.println("STACK EMPTY – cannot pop");
+ return -1;
+ }
+ return arr[top--];
+ }
+
+// Peek top element
+ public int peek() {
+ if (isEmpty()) {
+ System.out.println("STACK EMPTY – nothing to peek");
+ return -1;
+ }
+ return arr[top];
+ }
+ // Return current number of elements
+ public int size() {
+ return top + 1;
+ }
+}
+
+
+
+
+public class Main {
+ public static void main(String[] args) {
+ Stack stack = new Stack();
+ stack.push(10);
+ stack.push(20);
+ stack.push(30);
+ stack.push(40);
+ stack.push(50);
+ stack.push(60); // triggers array expansion
+ System.out.println("Top element: " + stack.peek());
+ System.out.println("Stack size: " + stack.size());
+ stack.pop();
+ stack.pop();
+ stack.pop();
+ stack.pop();
+ stack.pop();
+ stack.pop();
+ stack.pop(); // prints message but continues
+ }
+}
+
+
+
+
+
+4.
+
+import java.util.LinkedList;
+import java.util.Queue;
+
+class StackQueueDequeueFriendly {
+
+    Queue<Integer> q1 = new LinkedList<>();
+    Queue<Integer> q2 = new LinkedList<>();
+
+    // Push operation
+    void push(int data) {
+        q1.add(data);
+        System.out.println(data + " inserted.");
+    }
+
+    // Pop operation
+    int pop() {
+
+        if (q1.isEmpty()) {
+            System.out.println("Stack is Empty");
+            return -1;
+        }
+
+        while (q1.size() > 1) {
+            q2.add(q1.remove());
+        }
+
+        int value = q1.remove();
+
+        Queue<Integer> temp = q1;
+        q1 = q2;
+        q2 = temp;
+
+        return value;
+    }
+
+    public static void main(String[] args) {
+
+        StackQueueDequeueFriendly s = new StackQueueDequeueFriendly();
+
+        s.push(10);
+        s.push(20);
+        s.push(30);
+
+        System.out.println("Deleted: " + s.pop());
+    }
+}
