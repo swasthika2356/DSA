@@ -1,0 +1,73 @@
+public class LinkedListQueue {
+
+    class Node {
+        int data;
+        Node next;
+
+        Node(int data) {
+            this.data = data;
+            next = null;
+        }
+    }
+
+    Node front = null;
+    Node rear = null;
+
+    // Enqueue
+    void enqueue(int data) {
+
+        Node newNode = new Node(data);
+
+        if (rear == null) {
+            front = rear = newNode;
+            return;
+        }
+
+        rear.next = newNode;
+        rear = newNode;
+    }
+
+    // Dequeue
+    void dequeue() {
+
+        if (front == null) {
+            System.out.println("Queue is Empty");
+            return;
+        }
+
+        System.out.println("Deleted: " + front.data);
+
+        front = front.next;
+
+        if (front == null)
+            rear = null;
+    }
+
+    // Display
+    void display() {
+
+        Node temp = front;
+
+        while (temp != null) {
+            System.out.print(temp.data + " ");
+            temp = temp.next;
+        }
+
+        System.out.println();
+    }
+
+    public static void main(String[] args) {
+
+        LinkedListQueue q = new LinkedListQueue();
+
+        q.enqueue(10);
+        q.enqueue(20);
+        q.enqueue(30);
+
+        q.display();
+
+        q.dequeue();
+
+        q.display();
+    }
+}
